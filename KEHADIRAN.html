@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login To Do List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background-color: black;
+      font-family: Arial, sans-serif;
+      color: white;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    .hidden { display: none; }
+    .form-container {
+      margin-top: 50px;
+      margin-left: 400px;
+      background-color: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 95%;
+      padding: 10px;
+      margin: 5px 0 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: darkblue;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .info { margin-bottom: 30px; font-size: 18px; }
+    .info p { margin: 5px 0; }
+    .table-wrapper {
+      overflow-x: auto;
+      background-color: white;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 600px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      color: black;
+    }
+    th { background-color: yellow; }
+    .progress-container { margin-top: 30px; }
+    .progress-bar {
+  position: relative; /* supaya roket bisa absolute di dalam sini */
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 30px;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  animation: flameColor 1s infinite alternate;
+  text-align: center;
+  color: white;
+  line-height: 30px;
+  background-image: linear-gradient(
+    90deg,
+    rgb(255, 0, 0),
+    rgb(255, 100, 0),
+    rgb(255, 200, 0),
+    rgb(255, 100, 0),
+    rgb(255, 0, 0)
+  );
+  background-size: 200% 100%;
+  animation: flameMove 0.3s linear infinite;
+}
+
+@keyframes flameMove {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 100% 0%; }
+}
+
+
+.rocket {
+  padding-top: 40px;
+  position: absolute;
+  top: 100px;         /* naik sedikit agar ujung roket pas */
+  height: 50px;       /* perbesar ukuran roket */
+  margin-left: 15px;
+  z-index: 10;
+  transition: left 0.3s ease;
+  transform: rotate(90deg) scale(1.2); /* putar & perbesar */
+  transform-origin: center center;     /* rotasi dari tengah */
+}
+
+span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
+  0 0 0 8px rgba(255, 255, 255, 0.1), 
+  0 0 0 2px rgba(255, 255, 255, 0.1);
+  animation: animate 3s linear infinite;
+}
+
+span:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 500px;
+  height: 1px;
+  background: linear-gradient(90deg,#fff,transparent);
+}
+
+@keyframes animate {
+  0%
+  {
+    transform: rotate(315deg) translateX(0);
+    opacity: 1;
+  }
+  70%
+  {
+    opacity: 1;
+  }
+  100%
+  {
+    transform: rotate(315deg) translateX(-1350px);
+    opacity: 0;
+  }
+}
+
+span:nth-child(1) {
+  top: 0;
+  right: 0;
+  left: initial;
+  animation-delay: 0s;
+  animation-duration: 1s;
+}
+
+span:nth-child(2) {
+  top: 0px;
+  right: 80px;
+  left: initial;
+  animation-delay: 0.2s;
+  animation-duration: 3s;
+}
+
+span:nth-child(3) {
+  top: 80px;
+  right: 0px;
+  left: initial;
+  animation-delay: 0.4s;
+  animation-duration: 2s;
+}
+
+span:nth-child(4) {
+  top: 0px;
+  right: 180px;
+  left: initial;
+  animation-delay: 0.6s;
+  animation-duration: 1.5s;
+}
+
+span:nth-child(5) {
+  top: 0px;
+  right: 400px;
+  left: initial;
+  animation-delay: 0.8s;
+  animation-duration: 2.5s;
+}
+
+span:nth-child(6) {
+  top: 0px;
+  right: 600px;
+  left: initial;
+  animation-delay: 1s;
+  animation-duration: 3s;
+}
+
+span:nth-child(7) {
+  top: 300px;
+  right: 0px;
+  left: initial;
+  animation-delay: 1.2s;
+  animation-duration: 1.75s;
+}
+
+span:nth-child(8) {
+  top: 0px;
+  right: 700px;
+  left: initial;
+  animation-delay: 1.5s;
+  animation-duration: 1.25s;
+}
+
+span:nth-child(9) {
+  top: 0px;
+  right: 1000px;
+  left: initial;
+  animation-delay: 0.75s;
+  animation-duration: 2.25s;
+}
+
+span:nth-child(10) {
+  top: 0px;
+  right: 450px;
+  left: initial;
+  animation-delay: 2.75s;
+  animation-duration: 2.25s;
+}
+  </style>
+</head>
+<body>
+
+<section>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</section>
+
+<!-- Halaman Login -->
+<div id="loginPage" class="form-container">
+  <h2>Login</h2>
+  <input type="text" id="loginUsername" placeholder="Username" required>
+  <input type="password" id="loginPassword" placeholder="Password" required>
+  <button onclick="login()">Login</button>
+  <p>Belum punya akun? <a href="#" onclick="showPage('registerPage')">Daftar di sini</a></p>
+</div>
+
+<!-- Halaman Register -->
+<div id="registerPage" class="form-container hidden">
+  <h2>Daftar Akun</h2>
+  <input type="text" id="regUsername" placeholder="Username" required>
+  <input type="password" id="regPassword" placeholder="Password" required>
+  <input type="text" id="regNama" placeholder="Nama Lengkap" required>
+  <input type="text" id="regNIM" placeholder="NIM" required>
+  <input type="text" id="regDPA" placeholder="DPA" required>
+  <button onclick="register()">Daftar</button>
+  <p>Sudah punya akun? <a href="#" onclick="showPage('loginPage')">Login di sini</a></p>
+</div>
+
+<!-- Halaman To Do List -->
+<div id="todoPage" class="hidden">
+  <div class="info" id="userInfo"></div>
+
+  <div class="progress-container">
+    <p><strong>Progress Kehadiran:</strong></p>
+    <div class="progress-bar">
+      <div class="progress" id="progressBar">0%</div>
+      <img src="roket.png" id="rocketIcon" alt="Roket" class="rocket">
+    </div>
+
+    <div style="margin-bottom: 20px; margin-top: 20px;">
+      <button onclick="checkAll()" style="background-color: green;">Check All</button>
+      <button onclick="uncheckAll()" style="background-color: orange;">Uncheck All</button>
+      <button id="logoutBtn" style="background-color: red; margin-left: 900px;" onclick="logout()">Logout</button>
+</div>
+
+</div>
+
+  <div class="table-wrapper">
+    <table id="todoTable">
+      <thead>
+        <tr>
+          <th>Kelas</th>
+          <!-- Kolom pertemuan otomatis ditambahkan -->
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  
+
+  
+
+<script>
+  window.onload = function () {
+    let currentUser = null;
+
+    const tableHeader = document.querySelector("#todoTable thead tr");
+    const tableBody = document.getElementById("tableBody");
+    const progressBar = document.getElementById("progressBar");
+
+    const classes = [
+      'FisDas I', 'Prak. FisDas I', 'Kalkulus I', 'MatFis I',
+      'KimDas I', 'Agama Islam', 'Pemrog', 'Met. PengFis', 'Prak. KimDas I'
+    ];
+    const totalPertemuan = 28;
+
+    // Buat kolom pertemuan
+    for (let i = 1; i <= totalPertemuan; i++) {
+      const th = document.createElement('th');
+      th.textContent = `Pertemuan ${i}`;
+      tableHeader.appendChild(th);
+    }
+
+    // Buat baris tabel
+    classes.forEach(kelas => {
+      const tr = document.createElement('tr');
+      const tdKelas = document.createElement('td');
+      tdKelas.textContent = kelas;
+      tr.appendChild(tdKelas);
+
+      let pertemuanLimit = totalPertemuan;
+      if (kelas === 'Prak. FisDas I' || kelas === 'Prak. KimDas I') pertemuanLimit = 3;
+      else if (['Agama Islam', 'KimDas I', 'Pemrog', 'Met. PengFis'].includes(kelas)) pertemuanLimit = 14;
+
+      for (let i = 1; i <= totalPertemuan; i++) {
+        const td = document.createElement('td');
+        if (i <= pertemuanLimit) {
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.classList.add('check');
+          checkbox.dataset.kelas = kelas;
+          checkbox.dataset.pertemuan = i;
+          td.appendChild(checkbox);
+        }
+        tr.appendChild(td);
+      }
+
+      tableBody.appendChild(tr);
+    });
+
+    // Ganti halaman
+    function showPage(pageId) {
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('registerPage').classList.add('hidden');
+      document.getElementById('todoPage').classList.add('hidden');
+      document.getElementById(pageId).classList.remove('hidden');
+    }
+    window.showPage = showPage;
+
+    // Register
+    window.register = function () {
+      const username = document.getElementById('regUsername').value;
+      const password = document.getElementById('regPassword').value;
+      const nama = document.getElementById('regNama').value;
+      const nim = document.getElementById('regNIM').value;
+      const dpa = document.getElementById('regDPA').value;
+
+      if (!username || !password || !nama || !nim || !dpa) {
+        alert('Semua field harus diisi');
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      if (users[username]) {
+        alert('Username sudah digunakan');
+        return;
+      }
+
+      users[username] = { password, nama, nim, dpa, progress: 0, checklist: {} };
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('Pendaftaran berhasil. Silakan login.');
+      showPage('loginPage');
+    };
+
+    // Login
+    window.login = function () {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+
+      if (!users[username] || users[username].password !== password) {
+        alert('Username atau password salah');
+        return;
+      }
+
+      currentUser = username;
+      localStorage.setItem('currentUser', username);
+      showPage('todoPage');
+      loadUserData();
+    };
+
+    // Logout
+    window.logout = function () {
+      localStorage.removeItem('currentUser');
+      currentUser = null;
+      showPage('loginPage');
+    };
+
+    // Load data user saat refresh
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+      currentUser = savedUser;
+      showPage('todoPage');
+      loadUserData();
+    }
+
+    // Load checklist dan info
+    function loadUserData() {
+      const users = JSON.parse(localStorage.getItem('users'));
+      const data = users[currentUser];
+
+      document.getElementById('userInfo').innerHTML = `
+        <p><strong>Nama:</strong> ${data.nama}</p>
+        <p><strong>NIM:</strong> ${data.nim}</p>
+        <p><strong>DPA:</strong> ${data.dpa}</p>
+      `;
+
+      const checkboxes = document.querySelectorAll('.check');
+      checkboxes.forEach(cb => {
+        const key = `${cb.dataset.kelas}-${cb.dataset.pertemuan}`;
+        cb.checked = !!data.checklist[key];
+        cb.addEventListener('change', () => {
+          data.checklist[key] = cb.checked;
+          updateProgress();
+          users[currentUser] = data;
+          localStorage.setItem('users', JSON.stringify(users));
+        });
+      });
+
+      updateProgress();
+    }
+
+    window.checkAll = function () {
+  const users = JSON.parse(localStorage.getItem('users'));
+  const data = users[currentUser];
+  const checkboxes = document.querySelectorAll('.check');
+  checkboxes.forEach(cb => {
+    cb.checked = true;
+    const key = `${cb.dataset.kelas}-${cb.dataset.pertemuan}`;
+    data.checklist[key] = true;
+  });
+  updateProgress();
+  users[currentUser] = data;
+  localStorage.setItem('users', JSON.stringify(users));
+};
+
+window.uncheckAll = function () {
+  const users = JSON.parse(localStorage.getItem('users'));
+  const data = users[currentUser];
+  const checkboxes = document.querySelectorAll('.check');
+  checkboxes.forEach(cb => {
+    cb.checked = false;
+    const key = `${cb.dataset.kelas}-${cb.dataset.pertemuan}`;
+    data.checklist[key] = false;
+  });
+  updateProgress();
+  users[currentUser] = data;
+  localStorage.setItem('users', JSON.stringify(users));
+};
+
+
+    // Update Progress Bar
+    function updateProgress() {
+  const checkboxes = document.querySelectorAll('.check');
+  const total = checkboxes.length;
+  const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+  const percent = Math.round((checked / total) * 100);
+
+  progressBar.style.width = percent + '%';
+  progressBar.textContent = percent + '%';
+
+  // Geser roket sesuai progress
+ const rocket = document.getElementById('rocketIcon');
+const barWidth = document.querySelector('.progress-bar').clientWidth;
+
+if (rocket) {
+  const rocketX = Math.min((percent / 100) * barWidth, barWidth - 0);
+  const lift = Math.max(0, 30 - (percent / 110)); // naik perlahan
+  rocket.style.left = rocketX + 'px';
+  rocket.style.top = `-${lift}px`;
+}
+
+
+
+  const users = JSON.parse(localStorage.getItem('users'));
+  users[currentUser].progress = percent;
+  localStorage.setItem('users', JSON.stringify(users));
+}
+
+  };
+</script>
+
+</body>
+</html>
